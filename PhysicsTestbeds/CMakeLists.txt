@@ -1,0 +1,2 @@
+add_subdirectory(Physics2dCore)
+add_subdirectory(Physics2d)

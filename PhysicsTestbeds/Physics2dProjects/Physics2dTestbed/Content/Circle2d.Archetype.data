@@ -1,0 +1,37 @@
+[Version:1]
+Cog 
+{
+	var Name = "Circle1"
+	Transform 
+	{
+		var Translation = Real3{0, 0, 0}
+		var Scale = Real3{1, 1, 1}
+		var Rotation = Quaternion{0, 0, 0, 1}
+	}
+	RigidBody2d 
+	{
+		var IsStatic = false
+		var LinearVelocity = Real2{0, 0}
+		var AngularVelocity = 0
+		var InvMass = 1.27320004
+		var InvInertia = 6.28318024
+	}
+	CircleCollider2d 
+	{
+		var Material = "5de020863e872da8:DefaultPhysics2dMaterial"
+		var IsGhost = false
+		var Radius = 0.5
+	}
+	Model 
+	{
+		var Visible = true
+		var ViewCulling = true
+		var VisibilityEvents = true
+		var OverrideBoundingBox = false
+		var LocalAabbCenter = Real3{0, 0, 0}
+		var LocalAabbHalfExtents = Real3{1, 1, 1}
+		var GroupSortValue = 0
+		var Material = "583afb5e7bf75e18:ZeroMaterial"
+		var Mesh = "4de0354322b376ae:Sphere"
+	}
+}

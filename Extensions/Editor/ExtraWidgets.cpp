@@ -113,7 +113,8 @@ void PerformanceGraphWidget::RenderUpdate(ViewBlock& viewBlock, FrameBlock& fram
   // total
   {
     Profile::Record& record = *mainRecord;
-    float seconds = Profile::ProfileSystem::Instance->GetTimeInSeconds((Profile::ProfileTime)samplesTotal[Profile::Record::sSampleIndex - 1]);
+    uint sampleIndex = Math::Clamp(Profile::Record::sSampleIndex - 1, 0u, Profile::Record::cSampleCount - 1);
+    float seconds = Profile::ProfileSystem::Instance->GetTimeInSeconds((Profile::ProfileTime)samplesTotal[sampleIndex]);
     text = String::Format(" %0.1fms %s Total", seconds * 1000.0f, record.GetName());
     fontProcessor.mVertexColor = ToFloatColor(record.GetColor());
     AddTextRange(fontProcessor, font, text, namePos, TextAlign::Left, Vec2(1, 1), mSize, true);

@@ -1,0 +1,7 @@
+[Version:1]
+Physics2dMaterial 
+{
+	var Restitution = 0.300000012
+	var DynamicFriction = 0.5
+	var Density = 1
+}

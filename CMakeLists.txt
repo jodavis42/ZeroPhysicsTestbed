@@ -105,6 +105,7 @@ add_subdirectory(External)
 add_subdirectory(ZeroLibraries)
 add_subdirectory(Systems)
 add_subdirectory(Extensions)
+add_subdirectory(PhysicsTestbeds)
 add_subdirectory(Projects)
 
 if (generate_with_unit_tests)
