@@ -7,7 +7,7 @@
 #include "Components/PhysicsSpace2d.hpp"
 #include "Components/Physics2dDebugDrawConfig.hpp"
 #include "Resources/Physics2dMaterial.hpp"
-#include "ZeroUtilities.hpp"
+#include "Utilities/ZeroUtilities.hpp"
 
 namespace Physics2d
 {

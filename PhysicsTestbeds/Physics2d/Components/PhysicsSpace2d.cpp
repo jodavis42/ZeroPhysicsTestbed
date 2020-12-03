@@ -6,7 +6,7 @@
 #include "Physics2dCore/Constraints/Constraint2dMath.hpp"
 #include "Constraints/ConstraintSolver.hpp"
 #include "Constraints/ContactConstraint.hpp"
-#include "ZeroUtilities.hpp"
+#include "Utilities/ZeroUtilities.hpp"
 
 namespace Physics2d
 {

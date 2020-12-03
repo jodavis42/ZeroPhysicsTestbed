@@ -38,6 +38,6 @@ target_sources(Physics2d
     ${CMAKE_CURRENT_LIST_DIR}/Constraints/ConstraintUtilities.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Resources/Physics2dMaterial.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Resources/Physics2dMaterial.hpp
-    ${CMAKE_CURRENT_LIST_DIR}/ZeroUtilities.cpp
-    ${CMAKE_CURRENT_LIST_DIR}/ZeroUtilities.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/ZeroUtilities.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/ZeroUtilities.hpp
 )
