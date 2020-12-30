@@ -10,6 +10,7 @@ namespace Physics2d
 
 class PhysicsSpace2d;
 class Physics2dMaterial;
+class Physics2dNode;
 
 enum class Collider2dType { None = -1, Box = 0, Circle, Size };
 
@@ -39,6 +40,10 @@ public:
 
   virtual void UpdateBoundingVolumes();
 
+  // Internal ------------------------
+  void SetNode(Physics2dNode* node);
+  Physics2dNode* GetNode();
+
 protected:
   friend PhysicsSpace2d;
 
@@ -51,8 +56,8 @@ protected:
 
   PhysicsSpace2d* mSpace = nullptr;
   Zero::Link<Collider2d> mSpaceLink;
+  Physics2dNode* mNode = nullptr;
 
-  SpatialPartitionKey mSpatialPartitionKey;
   Aabb2d mWorldAabb;
   Circle2d mWorldCircle;
 

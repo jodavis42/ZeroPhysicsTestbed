@@ -13,6 +13,7 @@ namespace Physics2d
 
 class RigidBody2d;
 class CollisionLibrary;
+class Physics2dNodeManager;
 class Manifold2d;
 
 //-------------------------------------------------------------------PhysicsSpace
@@ -20,6 +21,8 @@ class PhysicsSpace2d : public Zero::Component
 {
 public:
   ZilchDeclareType(PhysicsSpace2d, TypeCopyMode::ReferenceType);
+
+  using SpatialPartitionDataType = SpatialPartitionData<Collider2d*>;
 
   PhysicsSpace2d();
   ~PhysicsSpace2d();
@@ -37,12 +40,12 @@ public:
   void Remove(Collider2d* collider);
   
   CollisionLibrary* GetCollisionLibrary() const;
+  void ToSpatialPartitionData(Collider2d* collider, SpatialPartitionDataType& data);
+  NSquaredSpatialPartition<Collider2d*> mSpatialPartition;
 
 private:
-  using SpatialPartitionDataType = SpatialPartitionData<Collider2d*>;
 
   void Update(float dt);
-  void UpdateBroadphase(float dt);
   void IntegrateVelocities(float dt);
   void IntegratePositions(float dt);
   void BroadPhase(float dt, Array<Collider2dPair>& possiblePairs);
@@ -51,12 +54,11 @@ private:
   void PublishTransforms();
 
   bool ShouldResolveCollisions(const Collider2d* collider0, const Collider2d* collider1);
-  void ToSpatialPartitionData(Collider2d* collider, SpatialPartitionDataType& data);
 
   Zero::InList<RigidBody2d, &RigidBody2d::mSpaceLink> mRigidBodies;
   Zero::InList<Collider2d, &Collider2d::mSpaceLink> mColliders;
   CollisionLibrary* mCollisionLibrary = nullptr;
-  NSquaredSpatialPartition<Collider2d*> mSpatialPartition;
+  Physics2dNodeManager* mNodeManager = nullptr;
 };
 
 }//namespace Physics2d

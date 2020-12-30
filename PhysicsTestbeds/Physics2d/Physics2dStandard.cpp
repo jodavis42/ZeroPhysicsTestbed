@@ -10,6 +10,7 @@
 
 #include "Components/CollisionDebug.hpp"
 #include "Components/Physics2dDebugDrawConfig.hpp"
+#include "Components/Physics2dNodeComponent.hpp"
 
 #include "Resources/Physics2dMaterial.hpp"
 
@@ -33,6 +34,7 @@ ZilchDefineStaticLibrary(Physics2dLibrary)
   ZilchInitializeType(CircleCollider2d);
   ZilchInitializeType(CollisionDebug);
   ZilchInitializeType(Physics2dDebugDrawConfig);
+  ZilchInitializeType(Physics2dNodeComponent);
 }
 
 void Physics2dLibrary::Initialize()

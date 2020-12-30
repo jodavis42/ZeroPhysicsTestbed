@@ -128,6 +128,16 @@ void Collider2d::UpdateBoundingVolumes()
   ComputeWorldCircle(worldTransform2d, GetLocalCircle());
 }
 
+void Collider2d::SetNode(Physics2dNode* node)
+{
+  mNode = node;
+}
+
+Physics2dNode* Collider2d::GetNode()
+{
+  return mNode;
+}
+
 Aabb2d Collider2d::GetLocalAabb() const
 {
   return Aabb2d::FromCenterAndHalfExtents(Vector2::cZero, Vector2(0.5f));

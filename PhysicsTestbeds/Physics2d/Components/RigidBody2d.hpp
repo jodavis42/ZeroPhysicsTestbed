@@ -6,6 +6,7 @@ namespace Physics2d
 {
 
 class PhysicsSpace2d;
+class Physics2dNode;
 
 //-------------------------------------------------------------------RigidBody2d
 class RigidBody2d : public Zero::Component
@@ -37,6 +38,10 @@ public:
   void GetVelocities(Vector2& linearVelocity, float& angularVelocity) const;
   void SetVelocities(const Vector2& linearVelocity, float angularVelocity);
 
+  // Internal ------------------------
+  void SetNode(Physics2dNode* node);
+  Physics2dNode* GetNode();
+
 private:
   friend PhysicsSpace2d;
 
@@ -44,6 +49,7 @@ private:
 
   PhysicsSpace2d* mSpace = nullptr;
   Zero::Link<RigidBody2d> mSpaceLink;
+  Physics2dNode* mNode = nullptr;
 
   bool mIsStatic = false;
 

@@ -124,6 +124,16 @@ void RigidBody2d::SetVelocities(const Vector2& linearVelocity, float angularVelo
   mAngularVelocity = angularVelocity;
 }
 
+void RigidBody2d::SetNode(Physics2dNode* node)
+{
+  mNode = node;
+}
+
+Physics2dNode* RigidBody2d::GetNode()
+{
+  return mNode;
+}
+
 void RigidBody2d::ReadTransform()
 {
   Zero::Transform* transform = GetOwner()->has(Zero::Transform);

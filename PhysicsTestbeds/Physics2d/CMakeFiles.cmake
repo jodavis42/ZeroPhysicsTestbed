@@ -24,6 +24,8 @@ target_sources(Physics2d
     ${CMAKE_CURRENT_LIST_DIR}/Components/CollisionDebug.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Components/Physics2dDebugDrawConfig.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Components/Physics2dDebugDrawConfig.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Components/Physics2dNodeComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Components/Physics2dNodeComponent.hpp
     ${CMAKE_CURRENT_LIST_DIR}/CollisionDetection/CollisionLibrary.cpp
     ${CMAKE_CURRENT_LIST_DIR}/CollisionDetection/CollisionLibrary.hpp
     ${CMAKE_CURRENT_LIST_DIR}/CollisionDetection/ContactManifold2d.cpp
@@ -38,6 +40,10 @@ target_sources(Physics2d
     ${CMAKE_CURRENT_LIST_DIR}/Constraints/ConstraintUtilities.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Resources/Physics2dMaterial.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Resources/Physics2dMaterial.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/Physics2dNode.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/Physics2dNode.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/Physics2dNodeManager.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Utilities/Physics2dNodeManager.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Utilities/ZeroUtilities.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Utilities/ZeroUtilities.hpp
 )

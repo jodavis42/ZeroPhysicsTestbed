@@ -6,6 +6,7 @@
 #include "Physics2dCore/Constraints/Constraint2dMath.hpp"
 #include "Constraints/ConstraintSolver.hpp"
 #include "Constraints/ContactConstraint.hpp"
+#include "Utilities/Physics2dNodeManager.hpp"
 #include "Utilities/ZeroUtilities.hpp"
 
 namespace Physics2d
@@ -23,10 +24,12 @@ ZilchDefineType(PhysicsSpace2d, builder, type)
 PhysicsSpace2d::PhysicsSpace2d()
 {
   mCollisionLibrary = new CollisionLibrary();
+  mNodeManager = new Physics2dNodeManager();
 }
 
 PhysicsSpace2d::~PhysicsSpace2d()
 {
+  delete mNodeManager;
   delete mCollisionLibrary;
 }
 
@@ -53,11 +56,18 @@ void PhysicsSpace2d::SystemLogicUpdate(Zero::UpdateEvent* updateEvent)
 void PhysicsSpace2d::Add(RigidBody2d* body)
 {
   mRigidBodies.PushBack(body);
+
+  Physics2dNode* node = mNodeManager->GetOrCreateNode(body->GetOwner());
+  node->SetBody(body);
+  node->QueueMassCalculation();
 }
 
 void PhysicsSpace2d::Remove(RigidBody2d* body)
 {
   mRigidBodies.Erase(body);
+
+  Physics2dNode* node = mNodeManager->GetNode(body->GetOwner());
+  node->ClearBody();
 }
 
 void PhysicsSpace2d::UpdateRigidBodyDynamicState(RigidBody2d* body)
@@ -68,16 +78,19 @@ void PhysicsSpace2d::UpdateRigidBodyDynamicState(RigidBody2d* body)
 void PhysicsSpace2d::Add(Collider2d* collider)
 {
   mColliders.PushBack(collider);
-  // Add to the spatial partition
-  SpatialPartitionDataType data;
-  ToSpatialPartitionData(collider, data);
-  collider->mSpatialPartitionKey = mSpatialPartition.Insert(data);
+
+  Physics2dNode* node = mNodeManager->GetOrCreateNode(collider->GetOwner());
+  node->SetCollider(collider);
+  node->QueueBroadphaseInsert();
 }
 
 void PhysicsSpace2d::Remove(Collider2d* collider)
 {
-  mSpatialPartition.Remove(collider->mSpatialPartitionKey);
   mColliders.Erase(collider);
+
+  Physics2dNode* node = mNodeManager->GetNode(collider->GetOwner());
+  node->QueueBroadphaseRemoval();
+  node->ClearCollider();
 }
 
 CollisionLibrary* PhysicsSpace2d::GetCollisionLibrary() const
@@ -85,9 +98,17 @@ CollisionLibrary* PhysicsSpace2d::GetCollisionLibrary() const
   return mCollisionLibrary;
 }
 
+void PhysicsSpace2d::ToSpatialPartitionData(Collider2d* collider, SpatialPartitionDataType& data)
+{
+  collider->UpdateBoundingVolumes();
+  data.mUserData = collider;
+  data.mAabb = collider->GetWorldAabb();
+  data.mCircle = collider->GetWorldCircle();
+}
+
 void PhysicsSpace2d::Update(float dt)
 {
-  UpdateBroadphase(dt);
+  mNodeManager->ProcessQueue(this);
   IntegrateVelocities(dt);
 
   Array<Collider2dPair> possiblePairs;
@@ -99,18 +120,6 @@ void PhysicsSpace2d::Update(float dt)
   ResolutionPhase(dt, manifolds);
   IntegratePositions(dt);
   PublishTransforms();
-}
-
-void PhysicsSpace2d::UpdateBroadphase(float dt)
-{
-  // Currently just update every item in the broadphase
-  for(auto colliderRange = mColliders.All(); !colliderRange.Empty(); colliderRange.PopFront())
-  {
-    Collider2d* collider = &colliderRange.Front();
-    SpatialPartitionDataType data;
-    ToSpatialPartitionData(collider, data);
-    mSpatialPartition.Update(collider->mSpatialPartitionKey, data);
-  }
 }
 
 void PhysicsSpace2d::IntegrateVelocities(float dt)
@@ -139,6 +148,7 @@ void PhysicsSpace2d::IntegratePositions(float dt)
     RigidBody2d& body = bodyRange.Front();
     EulerIntegrator::IntegratePosition(body.mWorldCenterOfMass, body.mLinearVelocity, dt);
     EulerIntegrator::IntegrateRotation(body.mWorldRotation, body.mAngularVelocity, dt);
+    body.GetNode()->QueueBroadphaseUpdate();
   }
 }
 
@@ -204,14 +214,6 @@ bool PhysicsSpace2d::ShouldResolveCollisions(const Collider2d* collider0, const 
   // If either body is a ghost, then don't resovle
   bool isGhost = collider0->GetIsGhost() || collider1->GetIsGhost();
   return !isGhost;
-}
-
-void PhysicsSpace2d::ToSpatialPartitionData(Collider2d* collider, SpatialPartitionDataType& data)
-{
-  collider->UpdateBoundingVolumes();
-  data.mUserData = collider;
-  data.mAabb = collider->GetWorldAabb();
-  data.mCircle = collider->GetWorldCircle();
 }
 
 }//namespace Physics2d
