@@ -41,21 +41,22 @@ public:
   class SelfQueryRange
   {
   public:
+    SelfQueryRange(SelfType* self)
+    {
+      mSelf = self;
+      SkipEmptyIndices();
+    }
+
     bool Empty() const
     {
-      return mIndex0 >= mSelf->mSlots.Size();
+      size_t size = mSelf->mSlots.Size();
+      return mIndex0 >= size || mIndex1 >= size;
     }
 
     void PopFront()
     {
       ++mIndex1;
-      while(mIndex1 >= mSelf->mSlots.Size())
-      {
-        ++mIndex0;
-        if(Empty())
-          break;
-        mIndex1 = mIndex0 + 1;
-      }
+      SkipEmptyIndices();
     }
 
     SelfQueryResultType Front()
@@ -64,6 +65,36 @@ public:
     }
 
   private:
+    
+    void SkipEmptyIndices()
+    {
+      if(!SkipEmptyIndices(mIndex1))
+      {
+        // If we reached the end of the list then advance the index0 instead. If we can't advance the index0 we're done.
+        ++mIndex0;
+        if(!SkipEmptyIndices(mIndex0))
+        {
+          mIndex1 = mIndex0 = mSelf->mSlots.Size();
+          return;
+        }
+
+        // Now update index1
+        mIndex1 = mIndex0 + 1;
+      }
+    }
+
+    bool SkipEmptyIndices(size_t& index)
+    {
+      while(index < mSelf->mSlots.Size())
+      {
+        if(!mSelf->mSlots[index].mIsEmpty)
+          return true;
+
+        ++index;
+      }
+      return false;
+    }
+
     friend SelfType;
     SelfType* mSelf = nullptr;
     size_t mIndex0 = 0;
@@ -72,8 +103,7 @@ public:
 
   SelfQueryRange SelfQuery()
   {
-    SelfQueryRange range;
-    range.mSelf = this;
+    SelfQueryRange range(this);
     return range;
   }
 
