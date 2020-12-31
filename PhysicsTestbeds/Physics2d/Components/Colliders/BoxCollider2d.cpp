@@ -61,6 +61,18 @@ float BoxCollider2d::GetLocalArea() const
   return mSize.x * mSize.y;
 }
 
+Collider2dMassData BoxCollider2d::ComputeMassData() const
+{
+  Vector2 worldSize = GetWorldSize();
+  Collider2dMassData result;
+  result.mLocalCenterOfMass = Vector2::cZero;
+  result.mDensity = GetDensity();
+  result.mWorldArea = worldSize.x * worldSize.y;
+  result.mWorldMass = result.mDensity * result.mWorldArea;
+  result.mWorldInertia = (1 / 12.0f) * result.mWorldMass * (Math::Sq(worldSize.x) + Math::Sq(worldSize.y));
+  return result;
+}
+
 Vector2 BoxCollider2d::GetWorldSize() const
 {
   Zero::Transform* transform = GetOwner()->has(Zero::Transform);

@@ -75,6 +75,11 @@ float RigidBody2d::GetInvMass() const
   return mInvMass;
 }
 
+void RigidBody2d::SetInvMass(float invMass)
+{
+  mInvMass = invMass;
+}
+
 float RigidBody2d::GetInvInertia() const
 {
   if(mIsStatic)
@@ -82,9 +87,19 @@ float RigidBody2d::GetInvInertia() const
   return mInvInertia;
 }
 
+void RigidBody2d::SetInvInertia(float invInertia)
+{
+  mInvInertia = invInertia;
+}
+
 Vector2 RigidBody2d::GetWorldCenterOfMass() const
 {
   return mWorldCenterOfMass;
+}
+
+void RigidBody2d::SetWorldCenterOfMass(const Vector2& worldCenterOfMass)
+{
+  mWorldCenterOfMass = worldCenterOfMass;
 }
 
 float RigidBody2d::GetWorldRotation() const

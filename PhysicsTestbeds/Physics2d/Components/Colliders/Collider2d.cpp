@@ -76,6 +76,11 @@ float Collider2d::GetLocalArea() const
   return 1.0f;
 }
 
+Collider2dMassData Collider2d::ComputeMassData() const
+{
+  return Collider2dMassData();
+}
+
 Aabb2d Collider2d::GetWorldAabb() const
 {
   return mWorldAabb;

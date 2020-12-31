@@ -23,6 +23,7 @@ public:
   void DebugDraw() override;
 
   float GetLocalArea() const override;
+  Collider2dMassData ComputeMassData() const override;
 
   float GetWorldRadius() const;
   Circle2d ToShape() const;

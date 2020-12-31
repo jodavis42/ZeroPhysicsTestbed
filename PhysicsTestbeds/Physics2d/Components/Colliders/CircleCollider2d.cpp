@@ -56,6 +56,18 @@ float CircleCollider2d::GetLocalArea() const
   return Math::cPi * mRadius * mRadius;
 }
 
+Collider2dMassData CircleCollider2d::ComputeMassData() const
+{
+  float worldRadius = GetWorldRadius();
+  Collider2dMassData result;
+  result.mLocalCenterOfMass = Vector2::cZero;
+  result.mDensity = GetDensity();
+  result.mWorldArea = Math::cPi * worldRadius * worldRadius;
+  result.mWorldMass = result.mDensity * result.mWorldArea;
+  result.mWorldInertia = result.mWorldMass * (0.5f * Math::Sq(worldRadius) + Math::Dot(result.mLocalCenterOfMass, result.mLocalCenterOfMass));
+  return result;
+}
+
 float CircleCollider2d::GetWorldRadius() const 
 {
   Zero::Transform* transform = GetOwner()->has(Zero::Transform);

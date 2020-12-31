@@ -14,6 +14,15 @@ class Physics2dNode;
 
 enum class Collider2dType { None = -1, Box = 0, Circle, Size };
 
+struct Collider2dMassData
+{
+  Vector2 mLocalCenterOfMass = Vector2::cZero;
+  float mDensity = 1.0f;
+  float mWorldArea = 0.0f;
+  float mWorldMass = 1.0f;
+  float mWorldInertia = 0.0f;
+};
+
 //-------------------------------------------------------------------Collider2d
 class Collider2d : public Zero::Component
 {
@@ -27,6 +36,7 @@ public:
 
   Collider2dType GetType() const;
   virtual float GetLocalArea() const;
+  virtual Collider2dMassData ComputeMassData() const;
 
   Aabb2d GetWorldAabb() const;
   Circle2d GetWorldCircle() const;

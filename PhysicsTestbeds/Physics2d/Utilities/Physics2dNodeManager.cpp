@@ -83,6 +83,21 @@ void Physics2dNodeManager::ProcessQueue(PhysicsSpace2d* space)
     }
     if(node.mRecomputeMass)
     {
+      Collider2dMassData massData;
+      if(node.mCollider2d != nullptr)
+        massData = node.mCollider2d->ComputeMassData();
+      if(node.mRigidBody2d != nullptr)
+      {
+        float invMass = 1.0f / massData.mWorldMass;
+        float invInertia = 1.0f / massData.mWorldInertia;
+        if(node.mRigidBody2d->GetIsStatic())
+        {
+          invMass = invInertia = 0.0f;
+        }
+
+        node.mRigidBody2d->SetInvMass(invMass);
+        node.mRigidBody2d->SetInvInertia(invInertia);
+      }
       // To Do
     }
     node.mQueued = false;

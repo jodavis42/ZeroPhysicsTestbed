@@ -23,6 +23,7 @@ public:
   void DebugDraw() override;
 
   float GetLocalArea() const override;
+  Collider2dMassData ComputeMassData() const override;
 
   Vector2 GetWorldSize() const;
   Box2d ToShape() const;

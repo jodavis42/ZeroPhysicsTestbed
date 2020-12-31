@@ -24,8 +24,14 @@ public:
 
   // Masses ------------------------
   float GetInvMass() const;
+  void SetInvMass(float invMass);
+
   float GetInvInertia() const;
+  void SetInvInertia(float invInertia);
+
   Vector2 GetWorldCenterOfMass() const;
+  void SetWorldCenterOfMass(const Vector2& worldCenterOfMass);
+
   float GetWorldRotation() const;
 
   // Velocities ------------------------
