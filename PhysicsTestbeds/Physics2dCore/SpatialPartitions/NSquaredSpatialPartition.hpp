@@ -44,6 +44,9 @@ public:
     SelfQueryRange(SelfType* self)
     {
       mSelf = self;
+      // Find the first valid index then increment them both until a valid pair is found.
+      SkipEmptyIndices(mIndex0);
+      mIndex1 = mIndex0 + 1;
       SkipEmptyIndices();
     }
 
