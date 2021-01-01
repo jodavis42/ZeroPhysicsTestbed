@@ -9,6 +9,8 @@ namespace Physics2d
 class Box2d
 {
 public:
+
+  Vector2 Search(const Vector2& direction) const;
   
   Vector2 mCenter = Vector2::cZero;
   Vector2 mHalfExtents = Vector2(0.5f);
