@@ -292,6 +292,13 @@ Vector2 Matrix2::Multiply(Mat2Param lhs, Vec2Param rhs)
   return Vector2(x, y);
 }
 
+Vector2 Matrix2::MultiplyTransposed(Mat2Param lhs, Vec2Param rhs)
+{
+  real x = Dot(lhs.GetBasis(0), rhs);
+  real y = Dot(lhs.GetBasis(1), rhs);
+  return Vector2(x, y);
+}
+
 Matrix2 Matrix2::GenerateScale(Vec2Param scale)
 {
   Matrix2 result;

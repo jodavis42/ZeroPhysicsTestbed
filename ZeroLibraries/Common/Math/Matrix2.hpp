@@ -87,6 +87,8 @@ public:
   static Matrix2 Multiply(Mat2Param lhs, Mat2Param rhs);
   /// Multiply the given vector by a matrix.
   static Vector2 Multiply(Mat2Param lhs, Vec2Param rhs);
+  ///Transforms the given vector by the matrix as if the matrix was transposed.
+  static Vector2 MultiplyTransposed(Mat2Param lhs, Vec2Param rhs);
   
   /// Generates a two dimensional scale matrix.
   static Matrix2 GenerateScale(Vec2Param scale);
