@@ -5,6 +5,9 @@
 #include "Shapes/Aabb2d.hpp"
 #include "Shapes/Box2d.hpp"
 #include "Shapes/Circle2d.hpp"
+#include "Collision/Mesh2d.hpp"
+#include "Collision/PrimitiveGeometry2d.hpp"
+#include "Collision/Sat2d.hpp"
 #include "Manifold2d.hpp"
 
 namespace Physics2d
@@ -13,8 +16,7 @@ namespace Physics2d
 //-------------------------------------------------------------------SimpleIntersection
 bool SimpleIntersection::PointAabb(const Vector2& point, const Aabb2d& aabb)
 {
-  return !(point.x < aabb.mMin.x || aabb.mMax.x < point.x ||
-    point.y < aabb.mMin.y || aabb.mMax.y < point.y);
+  return PrimitiveGeometry2d::PointAabb(point, aabb.mMin, aabb.mMax);
 }
 
 bool SimpleIntersection::AabbCircle(const Aabb2d& aabb0, const Circle2d& circle1, Manifold2d& manifold)
@@ -73,8 +75,10 @@ bool SimpleIntersection::AabbCircle(const Aabb2d& aabb0, const Circle2d& circle1
 
 bool SimpleIntersection::BoxBox(const Box2d& box0, const Box2d& box1, Manifold2d& manifold)
 {
-  // ToDo
-  return false;
+  Box2dMesh boxMesh0(box0);
+  Box2dMesh boxMesh1(box1);
+  Sat2d sat;
+  return sat.Test(boxMesh0, boxMesh1, &manifold);
 }
 
 bool SimpleIntersection::BoxCircle(const Box2d& box0, const Circle2d& circle1, Manifold2d& manifold)

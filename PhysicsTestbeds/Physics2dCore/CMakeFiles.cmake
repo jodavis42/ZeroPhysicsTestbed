@@ -18,8 +18,22 @@ target_sources(Physics2dCore
     ${CMAKE_CURRENT_LIST_DIR}/Shapes/Box2d.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Shapes/Circle2d.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Shapes/Circle2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Shapes/Plane2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Shapes/Plane2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Shapes/Ray2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Shapes/Ray2d.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Manifold2d.cpp
     ${CMAKE_CURRENT_LIST_DIR}/Manifold2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/Mesh2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/Mesh2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/IntersectionTypes2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/IntersectionTypes2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/IntersectionInterval2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/IntersectionInterval2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/PrimitiveGeometry2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/PrimitiveGeometry2d.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/Sat2d.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Collision/Sat2d.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Constraints/Jacobian2d.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Constraints/ConstraintVelocities2d.hpp
     ${CMAKE_CURRENT_LIST_DIR}/Constraints/ConstraintMass2d.hpp
